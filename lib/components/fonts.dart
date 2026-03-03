@@ -1,31 +1,60 @@
 import 'package:flutter/material.dart';
+import 'package:logicblock/components/colors.dart';
 
 class AppTexts {
   static const TextStyle headingOne = TextStyle(
     fontFamily: 'Inter',
     fontWeight: FontWeight.bold,
     fontSize: 24,
-    color: Color.fromARGB(255, 207, 216, 252)
+    color: AppColors.heading
   );
 
   static const TextStyle headingTwo = TextStyle(
     fontFamily: 'Inter',
     fontWeight: FontWeight.bold,
     fontSize: 18,
-    color: Color.fromARGB(255, 207, 216, 252)
+    color: AppColors.heading
+  );
+
+  static const TextStyle headingThree = TextStyle(
+    fontFamily: 'Inter',
+    fontSize: 16,
+    color: AppColors.heading
   );
 
   static const TextStyle body = TextStyle(
     fontFamily: 'JetBrainsMono',
     fontWeight: FontWeight.bold,
-    fontSize: 10,
-    color: Color.fromARGB(255, 169, 177, 214)
+    fontSize: 14,
+    color: AppColors.body
   );
 
-  static const TextStyle button = TextStyle(
+  static const TextStyle code = TextStyle(
     fontFamily: 'JetBrainsMono',
     fontWeight: FontWeight.bold,
-    fontSize: 10,
-    color: Color.fromARGB(255, 21, 22, 30)
+    fontSize: 11,
+    color: AppColors.body
   );
+  
+  static const TextStyle button = TextStyle(
+    fontFamily: 'Inter',
+    fontWeight: FontWeight.bold,
+    fontSize: 16,
+    color: AppColors.buttonText
+  );
+
+  static const TextStyle disabledHeadingTwo = TextStyle(
+    fontFamily: 'Inter',
+    fontWeight: FontWeight.bold,
+    fontSize: 18,
+    color: AppColors.disabled
+  );
+
+  static const TextStyle disabledHeadingThree = TextStyle(
+    fontFamily: 'Inter',
+    fontWeight: FontWeight.bold,
+    fontSize: 16,
+    color: AppColors.disabled
+  );
+  
 }

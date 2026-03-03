@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:logicblock/components/fonts.dart';
+
+import './fonts.dart';
+import './colors.dart';
 
 class AppButton extends StatelessWidget {
   
@@ -18,15 +20,18 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      height: height,
-      width: width,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Color.fromARGB(255, 187, 154, 247)
+    return GestureDetector(
+      onTap: perform,
+      child: Container(
+        alignment: Alignment.center,
+        height: height,
+        width: width,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: AppColors.primary
+        ),
+        child: Text(text, style: AppTexts.button),
       ),
-      child: Text(text, style: AppTexts.button),
     );
   }
   
