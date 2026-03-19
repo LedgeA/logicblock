@@ -42,7 +42,6 @@ class ProblemScreen extends StatelessWidget {
                   color: AppColors.surfaceTwo,
                   borderRadius: BorderRadius.circular(8),
                 ),
-                
                 codeblockPadding: const EdgeInsets.all(16),
               ),
             )

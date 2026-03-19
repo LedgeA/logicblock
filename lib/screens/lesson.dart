@@ -1,55 +1,170 @@
 import 'package:flutter/material.dart';
 import 'package:logicblock/components/colors.dart';
 import 'package:logicblock/screens/concept.dart';
-import 'package:logicblock/screens/problem.dart';
+import 'package:logicblock/screens/done/problem.dart';
 import 'package:logicblock/screens/sandbox.dart';
 
 class LessonScreens extends StatelessWidget {
   
-  static const String concept = """
-  # Variables & Data Types
-  &nbsp;&nbsp;&nbsp;&nbsp;Think of a variable as a labeled storage box in your computer's memory where you can keep data. Python is dynamically typed, meaning you don't have to declare the type of box ahead of time—Python figures it out based on what you put inside!
+  static const concepts = <String> [
+  """
+  # Variables and Data Types
+
+  &nbsp;&nbsp;&nbsp;&nbsp;A variable is like a labeled box that holds one value. You choose a name and put a value inside using `=`.
   &nbsp;
-  ## Core Data Types
-  * String (str): Text wrapped in quotes (e.g., "Hello, World!")
-  * Integer (int): Whole numbers without a decimal (e.g., 42)
-  * Float (float): Numbers with a decimal point (e.g., 3.14)
-  * Boolean (bool): Represents a binary state, exactly True or False
+  ## Common types in Python:
+  * int → whole numbers
+  * float → decimal numbers
+  * str → text (must use quotes)
+  * bool → only `True` or `False`
+  &nbsp;
+  ## Example
 
   ```python
-  # Assigning values to variables 
-  player_name = "Alex"    # String 
-  score = 150             # Integer 
-  health_multiplier = 1.5 # Float 
-  is_game_over = False    # Boolean
+  age = 16          # int
+  height = 1.62     # float
+  name = "Maria"    # str
+  has_pet = True    # bool
+  """,
 
-  # Printing a message using the variables 
-  print(f"Welcome {player_name}!”)
-  print(“Your score is {score}.")
-  ```
-  """;
+  """
+  # Operators
 
-  static const String lesson = """
-  # The Coffee Shop Checkout
-  &nbsp;&nbsp;&nbsp;&nbsp;You are programming a simple checkout system for a local cafe. You need to store information about a customer's order in the computer's memory so you can print a receipt.
+  &nbsp;&nbsp;&nbsp;&nbsp;Operators let you do math and make comparisons.
   &nbsp;
-  ## Coding Challenge
+  ## Types of Operators:
+  * Arithmetic: `+`, `-`, `*`, `/`, 
+  `//` (integer division), 
+  `%`  (remainder), 
+  `**` (power)
+  * Relational (comparison): 
+  `==`, `!=`, `>`, `<`, `>=`, `<=` 
+  
+  * Logical: `and`, `or`, `not`  
+  &nbsp;
+  ## Example
 
-  &nbsp;&nbsp;&nbsp;&nbsp;Write a small Python script that creates variables for the following pieces of information, choosing the correct data type for each:
-  1. The name of the drink (e.g., "Caramel Macchiato")
-  2. The number of drinks ordered (e.g., 2)
-  3. The price per drink (e.g., 4.50)
-  4. Whether the order is for "here" or "to-go" (represented by a True/False value for "is to-go")
-  Once you have created the variables, use the print block that outputs a summary of the order.
-  """;
+  ```python
+  total = 10 * 25.5                      # Arithmetic
+  mahal = total > 200                    # Relational
+  discount = total > 200 and total < 300 # Logical
+  ```
+  """,
 
+  """
+  # Conditionals
+
+  &nbsp;&nbsp;&nbsp;&nbsp;`if` checks a condition.
+  &nbsp;
+  ## How it works:
+  * If `True` → run the indented block.
+  * `else` → run when the condition is `False`.
+  * **Indentation (4 spaces) is required!**
+  &nbsp;
+  ## Example
+
+  ```python
+  grade = 80
+  if grade >= 75:
+      print("Pasado!")
+  else:
+      print("Bagsak.")
+  """
+  ];
+
+  static const problems = <String> [
+  """
+  # Exercise: Creating Variables
+
+  &nbsp;&nbsp;&nbsp;&nbsp;Create variables that store the following personal information:
+  &nbsp;
+  ## Requirements:
+  * Your name (text)
+  * Your age this year (whole number)
+  * Your height in meters (with decimal)
+  * Whether you have a pet (yes = `True`, no = `False`)
+  &nbsp;
+  ## Instructions:
+
+  &nbsp;&nbsp;&nbsp;&nbsp;Then print all four values in one clear sentence.
+  &nbsp;
+  ## Example Solution
+
+  ```python
+  name = "Alex"
+  age = 16
+  height = 1.62
+  has_pet = True
+
+  print(f"Hi, I am {name}, I am {age} years old, {height}m tall, and it is {has_pet} that I have a pet.")
+  """,
+
+  """
+  # Exercise: Mango Calculator
+
+  &nbsp;&nbsp;&nbsp;&nbsp;Ask the user to enter input values and perform calculations based on their answers.
+  &nbsp;
+  ## Ask the user to enter:
+  * 1. Number of mangoes they want to buy
+  * 2. Price per mango
+  &nbsp;
+  ## Calculate and show:
+  * Total cost
+  * If total cost is more than 200 → say "Mahal na!"
+  * Remainder when total cost is divided by 50
+  &nbsp;
+  ## Example Solution
+
+  ```python
+  mangoes = int(input("How many mangoes do you want to buy? "))
+  price = float(input("What is the price per mango? "))
+
+  total_cost = mangoes * price
+  print(f"Total cost: {total_cost}")
+
+  if total_cost > 200:
+      print("Mahal na!")
+
+  remainder = total_cost % 50
+  print(f"Remainder when divided by 50: {remainder}")
+  """,
+  
+  """
+  # Exercise: Grade Checker
+
+  &nbsp;&nbsp;&nbsp;&nbsp;Ask the user to input their numerical grade and evaluate if they passed or failed.
+  &nbsp;
+  ## Instructions:
+  * Ask the user for their grade (0–100).
+  * If grade ≥ 75 → print "Pasado ka!"
+  * Otherwise → print "Bagsak. Mag-aral ulit."
+  &nbsp;
+  ## Example Solution
+
+  ```python
+  grade = float(input("Enter your grade (0-100): "))
+
+  if grade >= 75:
+      print("Pasado ka!")
+  else:
+      print("Bagsak. Mag-aral ulit.")
+  """
+  ];
+
+  final int lessonNumber;
+
+  const LessonScreens({
+    super.key, 
+    required this.lessonNumber
+  });
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
         children: [
-          ConceptScreen(text: concept),
-          ProblemScreen(text: lesson),
+          ConceptScreen(text: concepts[lessonNumber]),
+          ProblemScreen(text: problems[lessonNumber]),
           SandboxScreen()
         ],
       ),
@@ -62,5 +177,5 @@ class LessonScreens extends StatelessWidget {
       ),
     );
   }
-
+  
 }

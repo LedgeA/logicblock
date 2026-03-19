@@ -29,6 +29,13 @@ class AppTexts {
     color: AppColors.body
   );
 
+    static const TextStyle smallBody = TextStyle(
+    fontFamily: 'JetBrainsMono',
+    fontWeight: FontWeight.bold,
+    fontSize: 13,
+    color: AppColors.body
+  );
+
   static const TextStyle code = TextStyle(
     fontFamily: 'JetBrainsMono',
     fontWeight: FontWeight.bold,
@@ -36,10 +43,17 @@ class AppTexts {
     color: AppColors.body
   );
   
-  static const TextStyle button = TextStyle(
+  static const TextStyle homeButton = TextStyle(
     fontFamily: 'Inter',
     fontWeight: FontWeight.bold,
     fontSize: 16,
+    color: AppColors.buttonText
+  );
+
+  static const TextStyle button = TextStyle(
+    fontFamily: 'JetBrainsMono',
+    fontWeight: FontWeight.bold,
+    fontSize: 14,
     color: AppColors.buttonText
   );
 
@@ -54,6 +68,13 @@ class AppTexts {
     fontFamily: 'Inter',
     fontWeight: FontWeight.bold,
     fontSize: 16,
+    color: AppColors.disabled
+  );
+
+  static const TextStyle disabledBody = TextStyle(
+    fontFamily: 'JetBrainsMono',
+    fontWeight: FontWeight.bold,
+    fontSize: 14,
     color: AppColors.disabled
   );
   

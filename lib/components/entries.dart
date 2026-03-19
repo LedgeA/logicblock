@@ -7,11 +7,13 @@ class LessonEntry extends StatelessWidget {
   
   final String title;
   final String status;
+  final int lessonNumber;
   
   const LessonEntry({
     super.key,
     required this.title,
     required this.status,
+    required this.lessonNumber
   });
 
   bool isFinished() {
@@ -28,7 +30,7 @@ class LessonEntry extends StatelessWidget {
     return GestureDetector(
       onTap: () => Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => LessonScreens()),
+        MaterialPageRoute(builder: (context) => LessonScreens(lessonNumber: this.lessonNumber - 1)),
       ),
       child: Column(
        children: [

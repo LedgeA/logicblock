@@ -10,6 +10,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_markdown_plus: ^1.0.7
+  splashscreen: ^2.0.0
+  
 
 
 dev_dependencies:
@@ -19,6 +21,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/logo.png
   fonts:
     - family: JetBrainsMono
       fonts: 
@@ -31,4 +35,6 @@ flutter:
         - asset: 'assets/fonts/Inter-VariableFont_opsz,wght.ttf'
         - asset: 'assets/fonts/Inter-Italic-VariableFont_opsz,wght.ttf'
           style: italic
+
+
 

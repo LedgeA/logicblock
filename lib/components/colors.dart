@@ -13,5 +13,4 @@ class AppColors {
   static const Color body = Color.fromARGB(255, 169, 177, 214);
   static const Color buttonText = Color.fromARGB(255, 21, 22, 30);
   static const Color disabled = Color.fromARGB(255, 86, 95, 137);
-
 }
