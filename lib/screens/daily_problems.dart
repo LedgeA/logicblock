@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:logicblock/components/colors.dart';
-import 'package:logicblock/screens/done/problem.dart';
+import 'package:logicblock/screens/problem.dart';
 import 'package:logicblock/screens/sandbox.dart';
 
 class ChallengeScreen extends StatelessWidget {
