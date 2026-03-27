@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_markdown_plus: ^1.0.7
+  shared_preferences: ^2.5.4
   splashscreen: ^2.0.0
   
 

@@ -3,8 +3,9 @@ import 'package:logicblock/components/colors.dart';
 import 'package:logicblock/screens/concept.dart';
 import 'package:logicblock/screens/problem.dart';
 import 'package:logicblock/screens/sandbox.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class LessonScreens extends StatelessWidget {
+class LessonScreens extends StatefulWidget {
   
   static const concepts = <String> [
   """
@@ -157,14 +158,36 @@ class LessonScreens extends StatelessWidget {
     super.key, 
     required this.lessonNumber
   });
-  
+
+  @override
+  State<LessonScreens> createState() => _LessonScreensState();
+}
+
+class _LessonScreensState extends State<LessonScreens> {
+
+String _savedUsername = "Loading...";
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUsername();
+  }
+
+  Future<void> _loadUsername() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String fetchedName = prefs.getString('username') ?? 'Guest';
+
+    setState(() {
+      _savedUsername = fetchedName;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
         children: [
-          ConceptScreen(text: concepts[lessonNumber]),
-          ProblemScreen(text: problems[lessonNumber]),
+          ConceptScreen(text: LessonScreens.concepts[widget.lessonNumber]),
+          ProblemScreen(text: LessonScreens.problems[widget.lessonNumber]),
           SandboxScreen()
         ],
       ),
@@ -172,10 +195,12 @@ class LessonScreens extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.surfaceOne,
         foregroundColor: AppColors.glow,
-        onPressed: () => Navigator.pop(context),
+        onPressed: () {
+          Navigator.pop(context);
+          print(_savedUsername);
+        },
         child: Icon(Icons.home),
       ),
     );
   }
-  
 }

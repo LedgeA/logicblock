@@ -13,10 +13,10 @@ class _AppSplashState extends State<AppSplash> {
   @override
   void initState() {
     super.initState();
-    _navigateToHome();
+    _navigateToUsernamePrompt();
   }
 
-  _navigateToHome() async {
+  _navigateToUsernamePrompt() async {
     await Future.delayed(const Duration(seconds: 3));
     
     if (!mounted) return; 

@@ -9,6 +9,14 @@ import 'package:logicblock/screens/daily_problems.dart';
 import 'package:logicblock/screens/sandbox.dart';
 
 class HomeScreen extends StatelessWidget {
+
+  final String username;
+
+  const HomeScreen({
+    super.key, 
+    required this.username
+  });
+  
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -26,7 +34,7 @@ class HomeScreen extends StatelessWidget {
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Hello User!', style: AppTexts.headingOne,),
+                    Text('Hello ' + username + '!', style: AppTexts.headingOne,),
                     Text('Welcome back!', style: AppTexts.headingThree,)
                   ], 
                 ),

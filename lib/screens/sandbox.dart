@@ -6,6 +6,7 @@ import 'package:logicblock/screens/code.dart';
 import 'package:logicblock/screens/output.dart';
 
 class SandboxScreen extends StatelessWidget {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,6 +29,7 @@ class SandboxScreen extends StatelessWidget {
                 ),
               }
             ),
+            
             AppButton(
               text: 'to code output', 
               isHomeButton: false,

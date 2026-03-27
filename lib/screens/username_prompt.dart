@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:logicblock/components/buttons.dart';
 import 'package:logicblock/components/colors.dart';
 import 'package:logicblock/components/fonts.dart';
@@ -12,17 +13,26 @@ class UsernamePromptScreen extends StatefulWidget {
 }
 
 class _UsernamePromptScreenState extends State<UsernamePromptScreen> {
+
+  final TextEditingController usernameController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
   }
-
+  
   _navigateToHome() async {
-    if (!mounted) return; 
+    if (!mounted || usernameController.text.isEmpty) return; 
+
+    final prefs = await SharedPreferences.getInstance();
+    
+    await prefs.setString('username', usernameController.text);
+
+    if (!mounted) return;
 
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => HomeScreen()),
+      MaterialPageRoute(builder: (context) => HomeScreen(username: usernameController.text)),
     );
   }
 
@@ -42,13 +52,13 @@ class _UsernamePromptScreenState extends State<UsernamePromptScreen> {
           ),
           ),
           Padding(
-            padding: EdgeInsetsGeometry.all(30),
+            padding: const EdgeInsetsGeometry.all(30), 
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               spacing: 20,
               children: [
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
                   width: double.infinity,
                   height: 200,
                   decoration: BoxDecoration(
@@ -73,6 +83,7 @@ class _UsernamePromptScreenState extends State<UsernamePromptScreen> {
                           fillColor: AppColors.surfaceTwo
                         ),
                         style: AppTexts.body,
+                        controller: usernameController,
                       ),
                       Text('We will use it to refer to you', style: AppTexts.smallBody)
                     ],
