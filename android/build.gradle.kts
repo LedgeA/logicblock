@@ -5,6 +5,10 @@ allprojects {
     }
 }
 
+plugins{
+    id("com.chaquo.python") version "17.0.0" apply false
+}
+
 val newBuildDir: Directory =
     rootProject.layout.buildDirectory
         .dir("../../build")
@@ -22,3 +26,4 @@ subprojects {
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
 }
+
