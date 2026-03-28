@@ -3,25 +3,54 @@ import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:logicblock/components/buttons.dart';
 import 'package:logicblock/components/colors.dart';
 import 'package:logicblock/components/fonts.dart';
+import 'package:logicblock/screens/home.dart';
+import 'package:logicblock/screens/lesson.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class OutputScreen extends StatelessWidget {
-  
+class OutputScreen extends StatefulWidget {
   final bool isRunning;
+  final int lessonNumber;
 
   const OutputScreen({
-    super.key, 
-    required this.isRunning
+    super.key,
+    required this.isRunning,
+    required this.lessonNumber,
   });
+  static const String text = 'This is the output';
 
-  codeStatus() {
-    if (isRunning) {
+  @override
+  State<OutputScreen> createState() => _OutputScreenState();
+}
+
+class _OutputScreenState extends State<OutputScreen> {
+  void initState() {
+    super.initState();
+    _loadLessonStatus();
+  }
+
+  String status = '';
+
+  _loadLessonStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    status =
+        await prefs.getString('lesson${widget.lessonNumber + 1}') ??
+        "Not Finished";
+  }
+
+  _updateLessonStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('lesson${widget.lessonNumber + 1}', status);
+  }
+
+  _codeStatus() {
+    if (widget.isRunning) {
       return 'Code is Running';
     }
 
     return 'There is an error';
   }
 
-  static const String text = 'This is the output';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,12 +60,33 @@ class OutputScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(codeStatus(), style: AppTexts.headingOne),
-            Divider(
-              height: 10,
-              thickness: 1,
-              color: AppColors.disabled,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(_codeStatus(), style: AppTexts.headingOne),
+                Row(
+                  children: [
+                    Text("Done?", style: AppTexts.body),
+                    GestureDetector(
+                      onTap: () => {
+                        setState(() {
+                          status = (status == "Completed")
+                              ? status = "Not Finished"
+                              : status = "Completed";
+                        }),
+                      },
+                      child: (status == 'Completed')
+                          ? Icon(Icons.check_box, color: AppColors.primary)
+                          : Icon(
+                              Icons.check_box_outline_blank,
+                              color: AppColors.primary,
+                            ),
+                    ),
+                  ],
+                ),
+              ],
             ),
+            Divider(height: 10, thickness: 1, color: AppColors.disabled),
             Text('Output', style: AppTexts.headingTwo),
             SingleChildScrollView(
               child: Container(
@@ -44,50 +94,63 @@ class OutputScreen extends StatelessWidget {
                 padding: EdgeInsetsDirectional.all(20),
                 decoration: BoxDecoration(
                   color: AppColors.surfaceOne,
-                  borderRadius: BorderRadius.circular(15)
+                  borderRadius: BorderRadius.circular(15),
                 ),
                 child: MarkdownBody(
-                  data: text,
+                  data: OutputScreen.text,
                   softLineBreak: true,
-                  styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
-                    p: AppTexts.body,
-                    h1: AppTexts.headingOne,
-                    h2: AppTexts.headingTwo,
-                    h3: AppTexts.headingThree,
-                    listBullet: AppTexts.body,
-                    textAlign: WrapAlignment.spaceBetween,
+                  styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context))
+                      .copyWith(
+                        p: AppTexts.body,
+                        h1: AppTexts.headingOne,
+                        h2: AppTexts.headingTwo,
+                        h3: AppTexts.headingThree,
+                        listBullet: AppTexts.body,
+                        textAlign: WrapAlignment.spaceBetween,
 
-                    code: AppTexts.code,
-                    codeblockDecoration: BoxDecoration(
-                      color: AppColors.surfaceTwo,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    codeblockPadding: const EdgeInsets.all(16),
-                  ),
-                )
+                        code: AppTexts.code,
+                        codeblockDecoration: BoxDecoration(
+                          color: AppColors.surfaceTwo,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        codeblockPadding: const EdgeInsets.all(16),
+                      ),
+                ),
               ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 AppButton(
-                  text: 'Return Home', 
+                  text: 'Return Home',
                   isHomeButton: false,
-                  height: 40, 
-                  width: 120, 
+                  height: 40,
+                  width: 120,
                   perform: () {
-                    // Navigator.popUntil(context, predicate);
-                  }
+                    _updateLessonStatus();
+                    Navigator.popUntil(context, (route) => route.isFirst);
+                  },
                 ),
                 AppButton(
-                  text: 'Next Lesson', 
+                  text: 'Next Lesson',
                   isHomeButton: false,
-                  height: 40, 
-                  width: 120, 
-                  perform: () {}
-                )
+                  height: 40,
+                  width: 120,
+                  perform: () {
+                    _updateLessonStatus();
+                    Navigator.popUntil(context, (route) => route.isFirst);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LessonScreens(
+                          lessonNumber: this.widget.lessonNumber + 1,
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ],
-            )
+            ),
           ],
         ),
       ),

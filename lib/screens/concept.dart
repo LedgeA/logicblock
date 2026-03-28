@@ -4,17 +4,12 @@ import 'package:logicblock/components/colors.dart';
 import 'package:logicblock/components/fonts.dart';
 
 class ConceptScreen extends StatelessWidget {
-  
   final String text;
 
-  const ConceptScreen({
-    super.key,
-    required this.text
-  });
+  const ConceptScreen({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: AppColors.background,
       body: Padding(
@@ -24,30 +19,31 @@ class ConceptScreen extends StatelessWidget {
             padding: EdgeInsetsDirectional.all(20),
             decoration: BoxDecoration(
               color: AppColors.surfaceOne,
-              borderRadius: BorderRadius.circular(15)
+              borderRadius: BorderRadius.circular(15),
             ),
             child: MarkdownBody(
               data: text,
               softLineBreak: true,
-              styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
-                p: AppTexts.body,
-                h1: AppTexts.headingOne,
-                h2: AppTexts.headingTwo,
-                h3: AppTexts.headingThree,
-                listBullet: AppTexts.body,
-                textAlign: WrapAlignment.spaceBetween,
+              styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context))
+                  .copyWith(
+                    p: AppTexts.body,
+                    h1: AppTexts.headingOne,
+                    h2: AppTexts.headingTwo,
+                    h3: AppTexts.headingThree,
+                    listBullet: AppTexts.body,
+                    textAlign: WrapAlignment.spaceBetween,
 
-                code: AppTexts.code,
-                codeblockDecoration: BoxDecoration(
-                  color: AppColors.surfaceTwo,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                
-                codeblockPadding: const EdgeInsets.all(16),
-              ),
-            )
+                    code: AppTexts.code,
+                    codeblockDecoration: BoxDecoration(
+                      color: AppColors.surfaceTwo,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+
+                    codeblockPadding: const EdgeInsets.all(16),
+                  ),
+            ),
           ),
-        )
+        ),
       ),
     );
   }

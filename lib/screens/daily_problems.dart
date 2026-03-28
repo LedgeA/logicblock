@@ -4,7 +4,6 @@ import 'package:logicblock/screens/problem.dart';
 import 'package:logicblock/screens/sandbox.dart';
 
 class ChallengeScreen extends StatelessWidget {
-  
   static const String concept = """
   # Variables & Data Types
   &nbsp;&nbsp;&nbsp;&nbsp;Think of a variable as a labeled storage box in your computer's memory where you can keep data. Python is dynamically typed, meaning you don't have to declare the type of box ahead of time—Python figures it out based on what you put inside!
@@ -48,7 +47,7 @@ class ChallengeScreen extends StatelessWidget {
       body: PageView(
         children: [
           ProblemScreen(text: lesson),
-          SandboxScreen()
+          SandboxScreen(lessonNumber: 0),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
@@ -60,5 +59,4 @@ class ChallengeScreen extends StatelessWidget {
       ),
     );
   }
-
 }

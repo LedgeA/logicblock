@@ -6,7 +6,9 @@ import 'package:logicblock/screens/code.dart';
 import 'package:logicblock/screens/output.dart';
 
 class SandboxScreen extends StatelessWidget {
-  
+  final int lessonNumber;
+
+  const SandboxScreen({super.key, required this.lessonNumber});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,32 +20,37 @@ class SandboxScreen extends StatelessWidget {
           children: [
             Text('This is the workspace', style: AppTexts.headingOne),
             AppButton(
-              text: 'to text interface', 
+              text: 'to text interface',
               isHomeButton: false,
-              height: 40, 
-              width: 160, 
+              height: 40,
+              width: 160,
               perform: () => {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => CodeScreen()),
                 ),
-              }
+              },
             ),
-            
+
             AppButton(
-              text: 'to code output', 
+              text: 'to code output',
               isHomeButton: false,
-              height: 40, 
-              width: 160, 
+              height: 40,
+              width: 160,
               perform: () => {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => OutputScreen(isRunning: true)),
+                  MaterialPageRoute(
+                    builder: (context) => OutputScreen(
+                      isRunning: true,
+                      lessonNumber: lessonNumber,
+                    ),
+                  ),
                 ),
-              }
-            )
+              },
+            ),
           ],
-        )
+        ),
       ),
     );
   }
