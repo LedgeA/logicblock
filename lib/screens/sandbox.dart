@@ -36,7 +36,7 @@ class SandboxScreen extends StatelessWidget {
               perform: () => {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => OutputScreen(isRunning: true)),
+                  MaterialPageRoute(builder: (context) => OutputScreen(isRunning: true, codeOutput: 'This is the output')),
                 ),
               }
             )
