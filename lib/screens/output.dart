@@ -4,24 +4,32 @@ import 'package:logicblock/components/buttons.dart';
 import 'package:logicblock/components/colors.dart';
 import 'package:logicblock/components/fonts.dart';
 
-class OutputScreen extends StatelessWidget {
+class OutputScreen extends StatefulWidget {
   
   final bool isRunning;
+  final String codeOutput;
 
   const OutputScreen({
     super.key, 
-    required this.isRunning
+    required this.isRunning,
+    required this.codeOutput
   });
 
+  static const String text = 'This is the output';
+
+  @override
+  _OutputScreenState createState() => _OutputScreenState();
+}
+
+class _OutputScreenState extends State<OutputScreen> {
   codeStatus() {
-    if (isRunning) {
+    if (widget.isRunning) {
       return 'Code is Running';
     }
 
     return 'There is an error';
   }
 
-  static const String text = 'This is the output';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +55,7 @@ class OutputScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15)
                 ),
                 child: MarkdownBody(
-                  data: text,
+                  data: '${widget.codeOutput}',
                   softLineBreak: true,
                   styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
                     p: AppTexts.body,
@@ -71,19 +79,19 @@ class OutputScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 AppButton(
-                  text: 'Return Home', 
+                  text: 'Return Home',
                   isHomeButton: false,
-                  height: 40, 
-                  width: 120, 
+                  height: 40,
+                  width: 120,
                   perform: () {
                     // Navigator.popUntil(context, predicate);
                   }
                 ),
                 AppButton(
-                  text: 'Next Lesson', 
+                  text: 'Next Lesson',
                   isHomeButton: false,
-                  height: 40, 
-                  width: 120, 
+                  height: 40,
+                  width: 120,
                   perform: () {}
                 )
               ],
