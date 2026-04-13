@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:logicblock/components/colors.dart';
+import 'package:logicblock/screens/sandbox.dart';
 import 'package:logicblock/screens/concept.dart';
 import 'package:logicblock/screens/problem.dart';
-import 'package:logicblock/screens/sandbox.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LessonScreens extends StatefulWidget {
@@ -348,7 +348,7 @@ class _LessonScreensState extends State<LessonScreens> {
         children: [
           ConceptScreen(text: LessonScreens.concepts[widget.lessonNumber]),
           ProblemScreen(text: LessonScreens.problems[widget.lessonNumber]),
-          SandboxScreen(lessonNumber: widget.lessonNumber),
+          SandboxScreen(lessonNumber: 0),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,

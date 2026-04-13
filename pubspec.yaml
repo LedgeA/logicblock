@@ -12,6 +12,7 @@ dependencies:
   flutter_markdown_plus: ^1.0.7
   shared_preferences: ^2.5.4
   splashscreen: ^2.0.0
+  webview_flutter: ^4.13.1
   
 
 
@@ -23,7 +24,10 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/logo.png
+    - assets/images/
+    - assets/blockly/
+    - assets/blockly/js/
+    - assets/blockly/media/
   fonts:
     - family: JetBrainsMono
       fonts: 

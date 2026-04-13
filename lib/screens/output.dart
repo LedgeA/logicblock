@@ -3,20 +3,21 @@ import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:logicblock/components/buttons.dart';
 import 'package:logicblock/components/colors.dart';
 import 'package:logicblock/components/fonts.dart';
-import 'package:logicblock/screens/home.dart';
 import 'package:logicblock/screens/lesson.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OutputScreen extends StatefulWidget {
-  final bool isRunning;
+  final String terminalOutput;
   final int lessonNumber;
+
+  final bool isRunning;
 
   const OutputScreen({
     super.key,
-    required this.isRunning,
+    required this.terminalOutput,
     required this.lessonNumber,
+    required this.isRunning,
   });
-  static const String text = 'This is the output';
 
   @override
   State<OutputScreen> createState() => _OutputScreenState();
@@ -59,6 +60,7 @@ class _OutputScreenState extends State<OutputScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 50),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 22,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -86,7 +88,7 @@ class _OutputScreenState extends State<OutputScreen> {
                 ),
               ],
             ),
-            Divider(height: 10, thickness: 1, color: AppColors.disabled),
+            Divider(height: 3, thickness: 1, color: AppColors.disabled),
             Text('Output', style: AppTexts.headingTwo),
             SingleChildScrollView(
               child: Container(
@@ -97,7 +99,7 @@ class _OutputScreenState extends State<OutputScreen> {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: MarkdownBody(
-                  data: OutputScreen.text,
+                  data: widget.terminalOutput,
                   softLineBreak: true,
                   styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context))
                       .copyWith(

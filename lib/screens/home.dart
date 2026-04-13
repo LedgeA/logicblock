@@ -5,8 +5,8 @@ import 'package:logicblock/components/colors.dart';
 import 'package:logicblock/components/entries.dart';
 import 'package:logicblock/components/fonts.dart';
 import 'package:logicblock/main.dart';
-import 'package:logicblock/screens/daily_problems.dart';
 import 'package:logicblock/screens/sandbox.dart';
+import 'package:logicblock/screens/daily_problems.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,7 +18,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with RouteAware {
   String _username = 'Loading...';
-  // FIX 1: Initialize with 7 placeholders to prevent RangeError during the first build
   List<String> _lessons = List.filled(7, "Loading...");
 
   @override
@@ -48,7 +47,6 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
   Future<void> _loadUserDetails() async {
     final prefs = await SharedPreferences.getInstance();
 
-    // Create temporary variables to hold the new data
     final String loadedUsername = prefs.getString('username') ?? 'User';
     final List<String> loadedLessons = [];
 
@@ -57,7 +55,6 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
       print(prefs.getString("lesson$i") ?? "Not Finished");
     }
 
-    // FIX 2: Replace the list instead of continuously appending to it
     setState(() {
       _username = loadedUsername;
       _lessons = loadedLessons;
@@ -105,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
                 ),
                 ButtonCard(
                   text: 'Practice coding freely',
-                  buttonText: 'Open Sandbox',
+                  buttonText: 'Open 1',
                   perform: () {
                     Navigator.push(
                       context,

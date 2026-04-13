@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Blockly Modern Dark Editor</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <script src="./js/blockly_compressed.js"></script>
+  <script src="./js/blocks_compressed.js"></script>
+  <script src="./js/en.js"></script>
+  <script src="./js/python_compressed.js"></script>
+
+  <script src="./js/skulpt.min.js"></script>
+  <script src="./js/skulpt-stdlib.js"></script>
+  
+  <style>
+    html, body { 
+      height: 100%; 
+      margin: 0; 
+      padding: 0; 
+      overflow: hidden; 
+      background-color: #1A1B26; 
+      font-family: 'Roboto', sans-serif;
+    }
+    #blocklyDiv { height: 100%; width: 100%; }
+
+    .blocklyToolboxDiv {
+      border-right: 1px solid #333;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+    }
+    .blocklyFlyoutBackground {
+      fill: #1A1B26;
+      fill-opacity: 1;
+    }
+
+    
+  </style>
+</head>
+<body>
+  <div id="blocklyDiv"></div>
+  
+  <xml id="toolbox" style="display: none">
+    <category name="Variables" colour="#e67e22" custom="VARIABLE"></category>
+    <category name="Logic" colour="#4c97ff">
+      <block type="controls_if"></block>
+      <block type="logic_compare"></block>
+      <block type="logic_operation"></block>
+      <block type="logic_negate"></block>
+      <block type="logic_boolean"></block>
+    </category>
+    <category name="Math" colour="#59c059">
+      <block type="math_number"></block>
+      <block type="math_arithmetic"></block>
+      <block type="math_modulo"></block>
+    </category>
+    <category name="Loops" colour="#b659c0">
+      <block type="controls_whileUntil"></block>
+    </category>
+    <category name="Text" colour="#ffab19">
+      <block type="text"></block>
+      <block type="text_print"></block>
+    </category>
+  </xml>
+
+  <script>
+    const componentStyles = {
+      'workspaceBackgroundColour': '#1A1B26',
+      'toolboxBackgroundColour': '#24283B',
+      'toolboxForegroundColour': '#BB9AF7',
+      'flyoutBackgroundColour': '#24283B',
+      'flyoutForegroundColour': '#24283B',
+      'insertionMarkerColour': '#ffffff',
+      'insertionMarkerOpacity': 0.3,
+      'scrollbarColour': '#555555',
+      'scrollbarOpacity': 0.4,
+      'cursorColour': '#d0d0d0'
+    };
+
+    const modernFont = {
+      'family': "'Roboto', sans-serif",
+      'weight': 'normal',
+      'size': 16
+    };
+
+    const blockStyles = {
+      "logic_blocks": { "colourPrimary": "#4c97ff" },
+      "math_blocks": { "colourPrimary": "#59c059" },
+      "text_blocks": { "colourPrimary": "#ffab19" },
+      "loop_blocks": { "colourPrimary": "#b659c0" },
+      "variable_blocks": { "colourPrimary": "#e67e22" }
+    };
+
+    const DarkModernTheme = Blockly.Theme.defineTheme('dark_modern', {
+      'base': Blockly.Themes.Classic,
+      'blockStyles': blockStyles,
+      'componentStyles': componentStyles,
+      'fontStyle': modernFont,
+      'startHats': true 
+    });
+
+    var workspace = Blockly.inject('blocklyDiv', {
+      toolbox: document.getElementById('toolbox'),
+      theme: DarkModernTheme,
+      horizontalLayout: true, 
+      toolboxPosition: 'end',
+      media: './media/',
+      grid: {
+        spacing: 20,
+        length: 3,
+        colour: '#333',
+        snap: true
+      },
+      zoom: {
+        controls: true,
+        wheel: true,
+        startScale: 1.0,
+        maxScale: 3,
+        minScale: 0.3,
+        scaleSpeed: 1.2
+      },
+      trashcan: true
+    });
+
+    var pendingInputResolver = null;
+
+    function receiveFlutterInput(userInput) {
+      if (pendingInputResolver) {
+        pendingInputResolver(userInput);
+        pendingInputResolver = null;
+      }
+    }
+
+    Blockly.dialog.setPrompt(function(message, defaultValue, callback) {
+      pendingInputResolver = callback;
+      if (window.InputChannel) {
+        window.InputChannel.postMessage(message);
+      }
+    });
+
+    function builtinRead(x) {
+      if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined) {
+        throw "File not found: '" + x + "'";
+      }
+      return Sk.builtinFiles["files"][x];
+    }
+
+    function executePython() {
+      var prog = Blockly.Python.workspaceToCode(workspace);
+      var terminalOutput = "";
+
+      Sk.configure({
+        output: function(text) { terminalOutput += text; },
+        read: builtinRead,
+        inputfun: function(promptText) {
+          return new Promise(function(resolve, reject) {
+            pendingInputResolver = resolve;
+            if (window.InputChannel) {
+              window.InputChannel.postMessage(promptText);
+            }
+          });
+        }
+      });
+
+      var myPromise = Sk.misceval.asyncToPromise(function() {
+        return Sk.importMainWithBody("<stdin>", false, prog, true);
+      });
+
+      myPromise.then(function(mod) {
+        if (window.OutputChannel) window.OutputChannel.postMessage("SUCCESS|" + terminalOutput);
+      }, function(err) {
+        if (window.OutputChannel) window.OutputChannel.postMessage("ERROR|" + err.toString());
+      });
+    }
+
+    function sendPythonCode() {
+      var code = Blockly.Python.workspaceToCode(workspace);
+      if (window.CodeChannel) {
+        window.CodeChannel.postMessage(code);
+      }
+    }
+
+    workspace.addChangeListener(function(event) {
+      if (event.type != Blockly.Events.UI) {
+        sendPythonCode();
+      }
+    });
+  </script>
+</body>
+</html>
