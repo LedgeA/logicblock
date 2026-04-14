@@ -6,7 +6,7 @@ import 'package:logicblock/components/entries.dart';
 import 'package:logicblock/components/fonts.dart';
 import 'package:logicblock/main.dart';
 import 'package:logicblock/screens/sandbox.dart';
-import 'package:logicblock/screens/daily_problems.dart';
+import 'package:logicblock/screens/challenges.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -63,6 +63,18 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
 
   @override
   Widget build(BuildContext context) {
+    final _lessonTitles = [
+      'Variables and Data Types',
+      'Arithmetic Operators',
+      'Relational Operators',
+      'Logical Operators',
+      'if Statement',
+      'if/else Statement',
+      'while Loop',
+    ];
+
+    int lastCompleted = _lessons.lastIndexWhere((s) => s == "Completed");
+
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
@@ -72,24 +84,27 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              // Note: 'spacing' is a relatively new feature in Flutter's Column.
-              // Ensure you are on Flutter 3.27+ to use this without errors!
               spacing: 20,
               children: [
-                Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      'Hello $_username!', // Cleaned up string concatenation
-                      style: AppTexts.headingOne,
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Hello $_username!', // Cleaned up string concatenation
+                          style: AppTexts.headingOne,
+                        ),
+                        Text('Welcome!', style: AppTexts.headingThree),
+                      ],
                     ),
-                    Text('Welcome!', style: AppTexts.headingThree),
                   ],
                 ),
                 ButtonCard(
-                  text: 'Daily Problem',
-                  buttonText: 'Solve Daily Problem',
+                  text: 'Challenges',
+                  buttonText: 'Solve a Random Problem',
                   perform: () {
                     Navigator.push(
                       context,
@@ -98,17 +113,16 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
                       ),
                     );
                   },
-                  status: 'Not Started',
                 ),
                 ButtonCard(
                   text: 'Practice coding freely',
-                  buttonText: 'Open 1',
+                  buttonText: 'Start Sandbox',
                   perform: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => Scaffold(
-                          body: SandboxScreen(lessonNumber: 0),
+                          body: SandboxScreen(lessonNumber: -1),
                           floatingActionButtonLocation:
                               FloatingActionButtonLocation.startFloat,
                           floatingActionButton: FloatingActionButton(
@@ -126,43 +140,20 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
                 Text('Lessons', style: AppTexts.headingTwo),
                 Column(
                   spacing: 10,
-                  children: [
-                    LessonEntry(
-                      title: 'Variables and Data Types',
-                      status: _lessons[0],
-                      lessonNumber: 0,
-                    ),
-                    LessonEntry(
-                      title: 'Arithmetic Operators',
-                      status: _lessons[1],
-                      lessonNumber: 1,
-                    ),
-                    LessonEntry(
-                      title: 'Relational Operators',
-                      status: _lessons[2],
-                      lessonNumber: 2,
-                    ),
-                    LessonEntry(
-                      title: 'Logical Operators',
-                      status: _lessons[3],
-                      lessonNumber: 3,
-                    ),
-                    LessonEntry(
-                      title: 'if Statement',
-                      status: _lessons[4],
-                      lessonNumber: 4,
-                    ),
-                    LessonEntry(
-                      title: 'if/else Statement',
-                      status: _lessons[5],
-                      lessonNumber: 5,
-                    ),
-                    LessonEntry(
-                      title: 'while Loop',
-                      status: _lessons[6],
-                      lessonNumber: 6,
-                    ),
-                  ],
+                  children: List.generate(_lessonTitles.length, (index) {
+                    bool isLocked = index > lastCompleted + 1;
+                    return Opacity(
+                      opacity: isLocked ? 0.5 : 1.0,
+                      child: AbsorbPointer(
+                        absorbing: isLocked,
+                        child: LessonEntry(
+                          title: _lessonTitles[index],
+                          status: _lessons[index],
+                          lessonNumber: index,
+                        ),
+                      ),
+                    );
+                  }),
                 ),
               ],
             ),

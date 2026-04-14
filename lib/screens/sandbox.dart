@@ -25,6 +25,7 @@ class _SandboxScreenState extends State<SandboxScreen> {
 
   @override
   void initState() {
+    print('lesson${widget.lessonNumber}');
     super.initState();
     _controller = WebViewController()
       ..setBackgroundColor(const Color(0xFF1E1E1E))
@@ -139,43 +140,53 @@ class _SandboxScreenState extends State<SandboxScreen> {
         children: [
           Container(
             color: AppColors.background,
-            height: 80,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            height: 100,
+            child: Column(
               children: [
-                IconButton(
-                  icon: const Icon(Icons.text_fields),
-                  color: AppColors.glow,
-                  iconSize: 30.0,
-                  onPressed: () => {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CodeScreen(code: pythonCode),
-                      ),
+                SizedBox(height: 40),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.text_fields),
+                      color: AppColors.glow,
+                      iconSize: 30.0,
+                      onPressed: () => {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CodeScreen(code: pythonCode),
+                          ),
+                        ),
+                      },
                     ),
-                  },
-                ),
-                AppButton(
-                  text: 'Start',
-                  isHomeButton: false,
-                  height: 40,
-                  width: 100,
-                  perform: () => {
-                    _controller.runJavaScript('executePython();'),
-                  },
+                    AppButton(
+                      text: 'Run',
+                      isHomeButton: false,
+                      height: 40,
+                      width: 100,
+                      perform: () => {
+                        _controller.runJavaScript('executePython();'),
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
           Expanded(
-            child: WebViewWidget(
-              controller: _controller,
-              gestureRecognizers: {
-                Factory<EagerGestureRecognizer>(() => EagerGestureRecognizer()),
-              },
+            child: ClipRect(
+              child: WebViewWidget(
+                controller: _controller,
+                gestureRecognizers: {
+                  Factory<EagerGestureRecognizer>(
+                    () => EagerGestureRecognizer(),
+                  ),
+                },
+              ),
             ),
           ),
+          SizedBox(height: 100),
         ],
       ),
     );

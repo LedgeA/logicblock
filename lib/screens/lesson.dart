@@ -335,7 +335,6 @@ class _LessonScreensState extends State<LessonScreens> {
   Future<void> _loadUsername() async {
     final prefs = await SharedPreferences.getInstance();
     final String fetchedName = prefs.getString('username') ?? 'Guest';
-
     setState(() {
       _savedUsername = fetchedName;
     });
@@ -348,7 +347,7 @@ class _LessonScreensState extends State<LessonScreens> {
         children: [
           ConceptScreen(text: LessonScreens.concepts[widget.lessonNumber]),
           ProblemScreen(text: LessonScreens.problems[widget.lessonNumber]),
-          SandboxScreen(lessonNumber: 0),
+          SandboxScreen(lessonNumber: widget.lessonNumber),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,

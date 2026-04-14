@@ -26,7 +26,6 @@ class _UsernamePromptScreenState extends State<UsernamePromptScreen> {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setString('username', usernameController.text);
-    await prefs.setString('dailyProblem', "Not Finished");
     await prefs.setString('lesson1', "Not Finished");
     await prefs.setString('lesson2', "Not Finished");
     await prefs.setString('lesson3', "Not Finished");

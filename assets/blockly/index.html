@@ -37,7 +37,24 @@
       fill-opacity: 1;
     }
 
-    
+    .blocklyMainBackground {
+      stroke: none !important;
+    }
+
+    .blocklyScrollbarHandle {
+      transform: scale(0.7);
+      fill: #555;
+    }
+
+    /* .blocklyScrollbarBackground {
+      transform: scale(0.7);
+    } */
+
+    /* .blocklyScrollbarHorizontal,
+    .blocklyScrollbarVertical {
+      transform: scale(0.8);
+    } */
+
   </style>
 </head>
 <body>
@@ -117,13 +134,19 @@
       zoom: {
         controls: true,
         wheel: true,
-        startScale: 1.0,
+        startScale: 0.8,
         maxScale: 3,
         minScale: 0.3,
         scaleSpeed: 1.2
       },
       trashcan: true
+      
     });
+
+    var mainBg = document.querySelector('.blocklyMainBackground');
+    if (mainBg) {
+      mainBg.setAttribute('stroke', 'none');
+    }
 
     var pendingInputResolver = null;
 
