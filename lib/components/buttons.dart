@@ -4,20 +4,19 @@ import './fonts.dart';
 import './colors.dart';
 
 class AppButton extends StatelessWidget {
-  
   final String text;
   final bool isHomeButton;
   final double height;
   final double width;
   final VoidCallback perform;
-  
+
   const AppButton({
     super.key,
     required this.text,
     required this.isHomeButton,
     required this.height,
     required this.width,
-    required this.perform, 
+    required this.perform,
   });
 
   _buttonTextStyle() {
@@ -35,7 +34,7 @@ class AppButton extends StatelessWidget {
         width: width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: AppColors.primary
+          color: AppColors.primary,
         ),
         child: Text(text, style: _buttonTextStyle()),
       ),

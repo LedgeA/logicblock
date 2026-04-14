@@ -123,7 +123,7 @@ class LessonScreens extends StatefulWidget {
   print(age >= 18 or has_id)   # True
   print(not (age < 18))        # True
   ```
-  &nbsp;
+  &nbsp;logicblock
   &nbsp;&nbsp;&nbsp;&nbsp;Logical operators are important because real-life decisions often need more than one condition — for example, “You must be 18 AND have an ID card.”
   """,
 

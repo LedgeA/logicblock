@@ -9,7 +9,7 @@ class ButtonCard extends StatelessWidget {
   final String buttonText;
   final VoidCallback perform;
   final String status;
-  
+
   const ButtonCard({
     super.key,
     required this.text,
@@ -24,7 +24,7 @@ class ButtonCard extends StatelessWidget {
       padding: EdgeInsets.all(14),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: AppColors.surfaceOne
+        color: AppColors.surfaceOne,
       ),
       child: Column(
         children: [
@@ -37,24 +37,22 @@ class ButtonCard extends StatelessWidget {
                   padding: EdgeInsetsDirectional.all(5),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: AppColors.surfaceTwo
+                    color: AppColors.surfaceTwo,
                   ),
-                  child: Text(status, style: AppTexts.code,),
-                )
+                  child: Text(status, style: AppTexts.code),
+                ),
             ],
           ),
           SizedBox(height: 15),
           AppButton(
-            text: buttonText, 
+            text: buttonText,
             isHomeButton: true,
-            height: 40, 
-            width: double.infinity, 
-            perform: perform
+            height: 40,
+            width: double.infinity,
+            perform: perform,
           ),
         ],
       ),
     );
   }
 }
-
-

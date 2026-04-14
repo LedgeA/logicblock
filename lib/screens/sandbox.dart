@@ -1,3 +1,4 @@
+import 'package:logicblock/components/fonts.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +72,7 @@ class _SandboxScreenState extends State<SandboxScreen> {
       ..addJavaScriptChannel(
         'InputChannel',
         onMessageReceived: (JavaScriptMessage message) {
-          _showNativeInputDialog(message.message);
+          _inputDialog(message.message);
         },
       );
 
@@ -82,24 +83,30 @@ class _SandboxScreenState extends State<SandboxScreen> {
     await _controller.loadFlutterAsset('assets/blockly/index.html');
   }
 
-  Future<void> _showNativeInputDialog(String promptText) async {
+  Future<void> _inputDialog(String promptText) async {
     _inputController.clear();
     await showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: Colors.grey[900],
+          backgroundColor: AppColors.surfaceOne,
           title: Text(
             promptText.isEmpty ? "Input Required" : promptText,
-            style: const TextStyle(color: Colors.white),
+            style: AppTexts.headingTwo,
           ),
           content: TextField(
             controller: _inputController,
-            style: const TextStyle(color: Colors.greenAccent),
-            decoration: const InputDecoration(
-              hintText: "Type here...",
-              hintStyle: TextStyle(color: Colors.grey),
+            style: AppTexts.body,
+            decoration: InputDecoration(
+              hintText: 'Enter a value',
+              hintStyle: AppTexts.disabledBody,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none,
+              ),
+              filled: true,
+              fillColor: AppColors.surfaceTwo,
             ),
           ),
           actions: [
@@ -108,13 +115,14 @@ class _SandboxScreenState extends State<SandboxScreen> {
                 _controller.runJavaScript("receiveFlutterInput(null);");
                 Navigator.of(context).pop();
               },
-              child: const Text(
-                "Cancel",
-                style: TextStyle(color: Colors.redAccent),
-              ),
+              child: const Text("Cancel", style: AppTexts.body),
             ),
-            ElevatedButton(
-              onPressed: () {
+            AppButton(
+              text: 'Submit',
+              isHomeButton: false,
+              height: 40,
+              width: 100,
+              perform: () {
                 final String safeAnswer = _inputController.text.replaceAll(
                   "'",
                   "\\'",
@@ -124,7 +132,6 @@ class _SandboxScreenState extends State<SandboxScreen> {
                 );
                 Navigator.of(context).pop();
               },
-              child: const Text("Submit"),
             ),
           ],
         );
