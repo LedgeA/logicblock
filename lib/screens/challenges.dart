@@ -109,7 +109,7 @@ class ChallengeScreen extends StatefulWidget {
   &nbsp;
   ## Example Solution
 
-  ```python
+  ```pythonChallengeSc
   password_length = 6
 
   if password_length >= 8:
@@ -156,7 +156,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
       body: PageView(
         children: [
           ProblemScreen(text: _currentChallenge),
-          SandboxScreen(lessonNumber: 0),
+          SandboxScreen(lessonNumber: -1),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,

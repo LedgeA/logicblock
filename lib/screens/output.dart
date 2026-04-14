@@ -23,7 +23,6 @@ class OutputScreen extends StatefulWidget {
 }
 
 class _OutputScreenState extends State<OutputScreen> {
-  // 1. Add a loading flag
   bool _isLoading = true;
   String status = '';
 
@@ -159,10 +158,9 @@ class _OutputScreenState extends State<OutputScreen> {
                   child: Icon(Icons.home, color: AppColors.primary, size: 45),
                 ),
 
-                if (widget.lessonNumber != -1)
+                if (widget.lessonNumber != -1 && widget.lessonNumber != 6)
                   AppButton(
                     text: 'Next Lesson',
-                    isHomeButton: false,
                     height: 40,
                     width: 120,
                     perform: () {

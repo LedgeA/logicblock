@@ -101,7 +101,6 @@ class _UsernamePromptScreenState extends State<UsernamePromptScreen> {
                 ),
                 AppButton(
                   text: 'Done',
-                  isHomeButton: false,
                   height: 40,
                   width: 100,
                   perform: () => _navigateToHome(),

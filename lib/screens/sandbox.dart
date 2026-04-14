@@ -119,7 +119,6 @@ class _SandboxScreenState extends State<SandboxScreen> {
             ),
             AppButton(
               text: 'Submit',
-              isHomeButton: false,
               height: 40,
               width: 100,
               perform: () {
@@ -169,7 +168,6 @@ class _SandboxScreenState extends State<SandboxScreen> {
                     ),
                     AppButton(
                       text: 'Run',
-                      isHomeButton: false,
                       height: 40,
                       width: 100,
                       perform: () => {
@@ -193,7 +191,7 @@ class _SandboxScreenState extends State<SandboxScreen> {
               ),
             ),
           ),
-          SizedBox(height: 100),
+          SizedBox(height: 140),
         ],
       ),
     );

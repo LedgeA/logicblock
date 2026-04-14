@@ -46,7 +46,6 @@ class ButtonCard extends StatelessWidget {
           SizedBox(height: 15),
           AppButton(
             text: buttonText,
-            isHomeButton: true,
             height: 40,
             width: double.infinity,
             perform: perform,

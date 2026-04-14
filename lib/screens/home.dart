@@ -40,7 +40,6 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
 
   @override
   void didPopNext() {
-    // FIX 3: Removed redundant setState wrapper
     _loadUserDetails();
   }
 
@@ -93,10 +92,7 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Hello $_username!', // Cleaned up string concatenation
-                          style: AppTexts.headingOne,
-                        ),
+                        Text('Hello $_username!', style: AppTexts.headingOne),
                         Text('Welcome!', style: AppTexts.headingThree),
                       ],
                     ),
